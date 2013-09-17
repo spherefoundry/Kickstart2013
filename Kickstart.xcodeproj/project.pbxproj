@@ -19,6 +19,8 @@
 		2A44F2D917E8F4DB009CB308 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A44F2C117E8F4DB009CB308 /* UIKit.framework */; };
 		2A44F2E117E8F4DB009CB308 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2A44F2DF17E8F4DB009CB308 /* InfoPlist.strings */; };
 		2A44F2E317E8F4DB009CB308 /* KickstartTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A44F2E217E8F4DB009CB308 /* KickstartTests.m */; };
+		2ADEAB8D17E90551001F29A3 /* WJStackCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ADEAB8C17E90551001F29A3 /* WJStackCalculator.m */; };
+		2ADEAB8F17E905AD001F29A3 /* WJStackCalculatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ADEAB8E17E905AD001F29A3 /* WJStackCalculatorTests.m */; };
 		ABCA96F697EF14FFF382C7FE /* WJCalculatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCA9B3383D48B75B061A1FA /* WJCalculatorTests.m */; };
 		ABCA98DD1690A799CF3DCAA9 /* WJCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCA9A99B225918E7D8F1B7B /* WJCalculator.m */; };
 /* End PBXBuildFile section */
@@ -50,6 +52,9 @@
 		2A44F2DE17E8F4DB009CB308 /* KickstartTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KickstartTests-Info.plist"; sourceTree = "<group>"; };
 		2A44F2E017E8F4DB009CB308 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2A44F2E217E8F4DB009CB308 /* KickstartTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KickstartTests.m; sourceTree = "<group>"; };
+		2ADEAB8B17E90551001F29A3 /* WJStackCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WJStackCalculator.h; sourceTree = "<group>"; };
+		2ADEAB8C17E90551001F29A3 /* WJStackCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJStackCalculator.m; sourceTree = "<group>"; };
+		2ADEAB8E17E905AD001F29A3 /* WJStackCalculatorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJStackCalculatorTests.m; sourceTree = "<group>"; };
 		ABCA9A99B225918E7D8F1B7B /* WJCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJCalculator.m; sourceTree = "<group>"; };
 		ABCA9B3383D48B75B061A1FA /* WJCalculatorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJCalculatorTests.m; sourceTree = "<group>"; };
 		ABCA9D3E971EBE72D2107B58 /* WJCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WJCalculator.h; sourceTree = "<group>"; };
@@ -138,6 +143,7 @@
 				2A44F2E217E8F4DB009CB308 /* KickstartTests.m */,
 				2A44F2DD17E8F4DB009CB308 /* Supporting Files */,
 				ABCA9B3383D48B75B061A1FA /* WJCalculatorTests.m */,
+				2ADEAB8E17E905AD001F29A3 /* WJStackCalculatorTests.m */,
 			);
 			path = KickstartTests;
 			sourceTree = "<group>";
@@ -149,6 +155,15 @@
 				2A44F2DF17E8F4DB009CB308 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2ADEAB8A17E90536001F29A3 /* StackCalculator */ = {
+			isa = PBXGroup;
+			children = (
+				2ADEAB8B17E90551001F29A3 /* WJStackCalculator.h */,
+				2ADEAB8C17E90551001F29A3 /* WJStackCalculator.m */,
+			);
+			path = StackCalculator;
 			sourceTree = "<group>";
 		};
 		ABCA970A4B9E04E780114AD5 /* Calculator */ = {
@@ -163,6 +178,7 @@
 		ABCA97229B42982F09E7BC14 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				2ADEAB8A17E90536001F29A3 /* StackCalculator */,
 				ABCA970A4B9E04E780114AD5 /* Calculator */,
 			);
 			path = Shared;
@@ -267,6 +283,7 @@
 				2A44F2CA17E8F4DB009CB308 /* main.m in Sources */,
 				2A44F2CE17E8F4DB009CB308 /* WJAppDelegate.m in Sources */,
 				ABCA98DD1690A799CF3DCAA9 /* WJCalculator.m in Sources */,
+				2ADEAB8D17E90551001F29A3 /* WJStackCalculator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +292,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A44F2E317E8F4DB009CB308 /* KickstartTests.m in Sources */,
+				2ADEAB8F17E905AD001F29A3 /* WJStackCalculatorTests.m in Sources */,
 				ABCA96F697EF14FFF382C7FE /* WJCalculatorTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
