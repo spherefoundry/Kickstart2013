@@ -19,6 +19,7 @@
 		2A44F2D917E8F4DB009CB308 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A44F2C117E8F4DB009CB308 /* UIKit.framework */; };
 		2A44F2E117E8F4DB009CB308 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2A44F2DF17E8F4DB009CB308 /* InfoPlist.strings */; };
 		2A44F2E317E8F4DB009CB308 /* KickstartTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A44F2E217E8F4DB009CB308 /* KickstartTests.m */; };
+		ABCA96F697EF14FFF382C7FE /* WJCalculatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCA9B3383D48B75B061A1FA /* WJCalculatorTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		2A44F2DE17E8F4DB009CB308 /* KickstartTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KickstartTests-Info.plist"; sourceTree = "<group>"; };
 		2A44F2E017E8F4DB009CB308 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2A44F2E217E8F4DB009CB308 /* KickstartTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KickstartTests.m; sourceTree = "<group>"; };
+		ABCA9B3383D48B75B061A1FA /* WJCalculatorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJCalculatorTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 			children = (
 				2A44F2E217E8F4DB009CB308 /* KickstartTests.m */,
 				2A44F2DD17E8F4DB009CB308 /* Supporting Files */,
+				ABCA9B3383D48B75B061A1FA /* WJCalculatorTests.m */,
 			);
 			path = KickstartTests;
 			sourceTree = "<group>";
@@ -250,6 +253,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A44F2E317E8F4DB009CB308 /* KickstartTests.m in Sources */,
+				ABCA96F697EF14FFF382C7FE /* WJCalculatorTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
