@@ -15,14 +15,16 @@
 
 @implementation WJStackCalculatorTests{
     WJStackCalculator * calculator;
+    NSUInteger notificationsCount;
+    NSUInteger notificationsPhase;
 }
 
 const CGFloat kStackCalculatorTestsSufficient = 0.0001f;
 
 - (void)setUp {
+    calculator = [WJStackCalculator new];
     [super setUp];
 
-    calculator = [WJStackCalculator new];
 }
 
 - (void)tearDown {
@@ -111,6 +113,57 @@ const CGFloat kStackCalculatorTestsSufficient = 0.0001f;
     XCTAssertEqualWithAccuracy(calculator.stackX, 2*25+3, kStackCalculatorTestsSufficient);
     XCTAssertEqualWithAccuracy(calculator.stackY, 0, kStackCalculatorTestsSufficient);
     XCTAssertEqual(calculator.stackDepth, (NSUInteger)1);
+}
+
+- (void)testNotifications{
+    notificationsCount = 0;
+    
+    [calculator addObserver:self
+                 forKeyPath:@"stackX"
+                    options:NSKeyValueObservingOptionNew
+                    context:nil];
+
+    [calculator addObserver:self
+                 forKeyPath:@"stackY"
+                    options:NSKeyValueObservingOptionNew
+                    context:nil];
+
+    [calculator addObserver:self
+                 forKeyPath:@"stackDepth"
+                    options:NSKeyValueObservingOptionNew
+                    context:nil];
+
+
+    [calculator push:15];
+    XCTAssertEqual(notificationsCount, (NSUInteger)111);
+
+    [calculator push:20];
+    XCTAssertEqual(notificationsCount, (NSUInteger)222);
+
+    [calculator add];
+    XCTAssertEqual(notificationsCount, (NSUInteger)333);
+
+    [calculator pop];
+    XCTAssertEqual(notificationsCount, (NSUInteger)444);
+
+    [calculator removeObserver:self
+                    forKeyPath:@"stackDepth"];
+    [calculator removeObserver:self
+                    forKeyPath:@"stackY"];
+    [calculator removeObserver:self
+                    forKeyPath:@"stackX"];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if([keyPath isEqualToString:@"stackX"]){
+        notificationsCount+=100;
+    } else if([keyPath isEqualToString:@"stackY"]){
+        notificationsCount+=10;
+    } else if([keyPath isEqualToString:@"stackDepth"]){
+        notificationsCount+=1;
+    } else{
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 @end
