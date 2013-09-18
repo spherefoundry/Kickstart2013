@@ -11,4 +11,8 @@
 
 
 @interface WJStackCalculatorView : UIView
+
+@property (nonatomic, strong, readonly) UILabel * inputLabel;
+@property (nonatomic, strong, readonly) UILabel * stackLabel;
+
 @end
