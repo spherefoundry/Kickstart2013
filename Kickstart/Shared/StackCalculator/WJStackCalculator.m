@@ -9,47 +9,79 @@
 #import "WJStackCalculator.h"
 
 @implementation WJStackCalculator {
-    NSMutableArray * _stack;
+    NSMutableArray *_stack;
+    NSUInteger _transactionDepth;
 }
 
 - (id)init {
     self = [super init];
     if (self) {
         _stack = [NSMutableArray array];
+        _transactionDepth = 0;
     }
 
     return self;
 }
 
+- (void)beginTransaction {
+    if(_transactionDepth == 0){
+        [self willChangeValueForKey:@"stackDepth"];
+        [self willChangeValueForKey:@"stackX"];
+        [self willChangeValueForKey:@"stackY"];
+    }
+    ++_transactionDepth;
+}
+
+- (void)endTransaction {
+    if(_transactionDepth == 0){
+        return;
+    }
+
+    if(_transactionDepth == 1){
+        [self didChangeValueForKey:@"stackY"];
+        [self didChangeValueForKey:@"stackX"];
+        [self didChangeValueForKey:@"stackDepth"];
+    }
+    --_transactionDepth;
+}
 
 - (NSUInteger)stackDepth {
     return [_stack count];
 }
 
 - (CGFloat)stackX {
-    if([_stack count] == 0){
+    if ([_stack count] == 0) {
         return 0;
     }
     return [[_stack lastObject] floatValue];
 }
 
 - (CGFloat)stackY {
-    if([_stack count] <= 1){
+    if ([_stack count] <= 1) {
         return 0;
     }
     return [[_stack objectAtIndex:[_stack count] - 2] floatValue];
 }
 
 - (void)push:(CGFloat)a {
+    [self beginTransaction];
+
     [_stack addObject:[NSNumber numberWithFloat:a]];
+
+    [self endTransaction];
 }
 
 - (CGFloat)pop {
-    if([_stack count] == 0){
+    if ([_stack count] == 0) {
         return 0;
     }
+
+    [self beginTransaction];
+
     CGFloat a = [[_stack lastObject] floatValue];
     [_stack removeLastObject];
+
+    [self endTransaction];
     return a;
 }
 
@@ -58,20 +90,28 @@
         return;
     }
 
+    [self beginTransaction];
+
     [_stack exchangeObjectAtIndex:(_stack.count - 1) withObjectAtIndex:(_stack.count - 2)];
+
+    [self endTransaction];
 }
 
 - (void)duplicate {
-    if([_stack count] == 0){
+    if ([_stack count] == 0) {
         return;
     }
 
+    [self beginTransaction];
+
     [_stack addObject:[_stack lastObject]];
+
+    [self endTransaction];
 }
 
 - (void)add {
     [self pop2push1op:^CGFloat(CGFloat a, CGFloat b) {
-         return a + b;
+        return a + b;
     }];
 }
 
@@ -111,25 +151,37 @@
     }];
 }
 
--(void)pop1push1op:(CGFloat (^)(CGFloat a))op{
+- (void)pop1push1op:(CGFloat (^)(CGFloat a))op {
+    [self beginTransaction];
+
     CGFloat a = [self pop];
 
     [self push:op(a)];
+
+    [self endTransaction];
 }
 
--(void)pop2push1op:(CGFloat (^)(CGFloat a, CGFloat b))op{
+- (void)pop2push1op:(CGFloat (^)(CGFloat a, CGFloat b))op {
+    [self beginTransaction];
+
     CGFloat a = [self pop];
     CGFloat b = [self pop];
 
     [self push:op(a, b)];
+
+    [self endTransaction];
 }
 
--(void)pop3push1op:(CGFloat (^)(CGFloat a, CGFloat b, CGFloat c))op{
+- (void)pop3push1op:(CGFloat (^)(CGFloat a, CGFloat b, CGFloat c))op {
+    [self beginTransaction];
+
     CGFloat a = [self pop];
     CGFloat b = [self pop];
     CGFloat c = [self pop];
 
     [self push:op(a, b, c)];
+
+    [self endTransaction];
 }
 
 
