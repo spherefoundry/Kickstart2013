@@ -11,6 +11,8 @@
 
 
 @implementation WJStackCalculatorView {
+    UIImageView *_labelFrame;
+
     NSArray *_buttonPresets;
     NSMutableArray *_buttons;
     NSUInteger _buttonsCountX;
@@ -27,8 +29,17 @@ NSString *const kStackCalculatorButtonPosYKey = @"posY";
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor blackColor];
+
+        UIImage *buttonImage = [[[UIImage imageNamed:@"calculator_button"] resizableImageWithCapInsets:UIEdgeInsetsMake(14, 14, 14, 14) resizingMode:UIImageResizingModeStretch] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        UIImage *buttonImageFlip = [[[UIImage imageNamed:@"calculator_button_flip"] resizableImageWithCapInsets:UIEdgeInsetsMake(14, 14, 14, 14) resizingMode:UIImageResizingModeStretch] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+        _labelFrame = [[UIImageView alloc] initWithImage:buttonImage];
+        _labelFrame.tintColor = [UIColor redColor];
+        [self addSubview:_labelFrame];
+
         _inputLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        _inputLabel.backgroundColor = [UIColor greenColor];
+        _inputLabel.backgroundColor = [UIColor clearColor];
         _inputLabel.font = [UIFont boldSystemFontOfSize:30];
         _inputLabel.textColor = [UIColor whiteColor];
         _inputLabel.textAlignment = NSTextAlignmentRight;
@@ -36,9 +47,9 @@ NSString *const kStackCalculatorButtonPosYKey = @"posY";
         [self addSubview:_inputLabel];
 
         _stackLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        _stackLabel.backgroundColor = [UIColor redColor];
+        _stackLabel.backgroundColor = [UIColor clearColor];
         _stackLabel.font = [UIFont boldSystemFontOfSize:24];
-        _stackLabel.textColor = [UIColor whiteColor];
+        _stackLabel.textColor = [UIColor grayColor];
         _stackLabel.textAlignment = NSTextAlignmentRight;
         _stackLabel.numberOfLines = 2;
         _stackLabel.text = @"stackX\nstackY";
@@ -77,17 +88,26 @@ NSString *const kStackCalculatorButtonPosYKey = @"posY";
 
         _buttons = [NSMutableArray array];
         for (NSDictionary *dictionary in _buttonPresets) {
-            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            [button setTitle:dictionary[kStackCalculatorButtonCaptionKey] forState:UIControlStateNormal];
-            button.showsTouchWhenHighlighted = YES;
-            button.backgroundColor = [UIColor blueColor];
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
 
-            if([dictionary[kStackCalculatorButtonPosXKey] unsignedIntegerValue] + 1 > _buttonsCountX){
-                _buttonsCountX = [dictionary[kStackCalculatorButtonPosXKey] unsignedIntegerValue] + 1;
+            NSUInteger posX = [dictionary[kStackCalculatorButtonPosXKey] unsignedIntegerValue];
+            NSUInteger posY = [dictionary[kStackCalculatorButtonPosYKey] unsignedIntegerValue];
+
+            button.titleLabel.font = [UIFont boldSystemFontOfSize:24];
+            button.titleLabel.adjustsFontSizeToFitWidth = YES;
+            button.tintColor = [UIColor redColor];
+            button.titleEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5);
+
+            [button setTitle:dictionary[kStackCalculatorButtonCaptionKey] forState:UIControlStateNormal];
+            [button setBackgroundImage:(posX+posY)%2 == 1 ? buttonImage : buttonImageFlip forState:UIControlStateNormal];
+
+            if (posX + 1 > _buttonsCountX) {
+                _buttonsCountX = posX + 1;
             }
 
-            if([dictionary[kStackCalculatorButtonPosYKey] unsignedIntegerValue] + 1 > _buttonsCountY){
-                _buttonsCountY = [dictionary[kStackCalculatorButtonPosYKey] unsignedIntegerValue] + 1;
+
+            if (posY + 1 > _buttonsCountY) {
+                _buttonsCountY = posY + 1;
             }
 
             [_buttons addObject:button];
@@ -104,20 +124,23 @@ NSString *const kStackCalculatorButtonPosYKey = @"posY";
     const CGFloat padding = 10;
 
     CGFloat elementWidth = self.bounds.size.width - 2 * padding;
-    CGFloat top = padding;
 
-    _inputLabel.frame = CGRectMake(padding, top, elementWidth, _inputLabel.font.lineHeight);
+    _labelFrame.frame = CGRectMake(padding, padding, elementWidth, _inputLabel.font.lineHeight + _stackLabel.font.lineHeight * _stackLabel.numberOfLines + 2 * padding);
+
+    CGFloat top = padding * 1.5f;
+
+    _inputLabel.frame = CGRectMake(padding * 2, top, elementWidth - padding * 2, _inputLabel.font.lineHeight);
     top = CGRectGetMaxY(_inputLabel.frame) + padding;
 
-    _stackLabel.frame = CGRectMake(padding, top, elementWidth, _stackLabel.font.lineHeight * _stackLabel.numberOfLines);
-    top = CGRectGetMaxY(_stackLabel.frame);
+    _stackLabel.frame = CGRectMake(padding * 2, top, elementWidth - padding * 2, _stackLabel.font.lineHeight * _stackLabel.numberOfLines);
+    top = CGRectGetMaxY(_stackLabel.frame) + padding * 0.5f;
 
-    CGSize buttonSize = CGSizeMake((self.bounds.size.width - (_buttonsCountX+1)*padding) / _buttonsCountX,
-            (self.bounds.size.height - top - (_buttonsCountY+1)*padding) / _buttonsCountY);
+    CGSize buttonSize = CGSizeMake((self.bounds.size.width - (_buttonsCountX + 1) * padding) / _buttonsCountX,
+            (self.bounds.size.height - top - (_buttonsCountY + 1) * padding) / _buttonsCountY);
 
-    for(NSUInteger i = 0; i < _buttons.count; ++i){
-        UIButton * button = _buttons[i];
-        NSDictionary * buttonPreset = _buttonPresets[i];
+    for (NSUInteger i = 0; i < _buttons.count; ++i) {
+        UIButton *button = _buttons[i];
+        NSDictionary *buttonPreset = _buttonPresets[i];
 
         button.frame = CGRectMake(padding + (buttonSize.width + padding) * [buttonPreset[kStackCalculatorButtonPosXKey] unsignedIntegerValue],
                 top + padding + (buttonSize.height + padding) * [buttonPreset[kStackCalculatorButtonPosYKey] unsignedIntegerValue],

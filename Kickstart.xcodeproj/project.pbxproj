@@ -19,6 +19,8 @@
 		2A44F2D917E8F4DB009CB308 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A44F2C117E8F4DB009CB308 /* UIKit.framework */; };
 		2A44F2E117E8F4DB009CB308 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2A44F2DF17E8F4DB009CB308 /* InfoPlist.strings */; };
 		2A44F2E317E8F4DB009CB308 /* KickstartTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A44F2E217E8F4DB009CB308 /* KickstartTests.m */; };
+		2AD4163317EB0010005E37B5 /* calculator_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AD4163217EB0010005E37B5 /* calculator_button@2x.png */; };
+		2AD4163517EB11B8005E37B5 /* calculator_button_flip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AD4163417EB11B8005E37B5 /* calculator_button_flip@2x.png */; };
 		2ADEAB8F17E905AD001F29A3 /* WJStackCalculatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ADEAB8E17E905AD001F29A3 /* WJStackCalculatorTests.m */; };
 		ABCA96F697EF14FFF382C7FE /* WJCalculatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCA9B3383D48B75B061A1FA /* WJCalculatorTests.m */; };
 		ABCA9BD13039B4D9F38A4DCC /* WJStackCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCA93AAA0FD484A5BFB7A9F /* WJStackCalculator.m */; };
@@ -54,6 +56,8 @@
 		2A44F2DE17E8F4DB009CB308 /* KickstartTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KickstartTests-Info.plist"; sourceTree = "<group>"; };
 		2A44F2E017E8F4DB009CB308 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2A44F2E217E8F4DB009CB308 /* KickstartTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KickstartTests.m; sourceTree = "<group>"; };
+		2AD4163217EB0010005E37B5 /* calculator_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calculator_button@2x.png"; sourceTree = "<group>"; };
+		2AD4163417EB11B8005E37B5 /* calculator_button_flip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calculator_button_flip@2x.png"; sourceTree = "<group>"; };
 		2ADEAB8E17E905AD001F29A3 /* WJStackCalculatorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJStackCalculatorTests.m; sourceTree = "<group>"; };
 		ABCA908CB930641F731DE2A5 /* WJCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJCalculator.m; sourceTree = "<group>"; };
 		ABCA936FC7E61476458F66C1 /* WJStackCalculatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJStackCalculatorViewController.m; sourceTree = "<group>"; };
@@ -123,6 +127,7 @@
 		2A44F2C317E8F4DB009CB308 /* Kickstart */ = {
 			isa = PBXGroup;
 			children = (
+				2AD4163117EB0010005E37B5 /* Resources */,
 				2A44F2CC17E8F4DB009CB308 /* WJAppDelegate.h */,
 				2A44F2CD17E8F4DB009CB308 /* WJAppDelegate.m */,
 				2A44F2CF17E8F4DB009CB308 /* Images.xcassets */,
@@ -161,6 +166,15 @@
 				2A44F2DF17E8F4DB009CB308 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2AD4163117EB0010005E37B5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2AD4163417EB11B8005E37B5 /* calculator_button_flip@2x.png */,
+				2AD4163217EB0010005E37B5 /* calculator_button@2x.png */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		ABCA934CA129649086B74E6A /* UI */ = {
@@ -295,7 +309,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A44F2C817E8F4DB009CB308 /* InfoPlist.strings in Resources */,
+				2AD4163517EB11B8005E37B5 /* calculator_button_flip@2x.png in Resources */,
 				2A44F2D017E8F4DB009CB308 /* Images.xcassets in Resources */,
+				2AD4163317EB0010005E37B5 /* calculator_button@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
