@@ -24,6 +24,7 @@
 		2ADEAB8F17E905AD001F29A3 /* WJStackCalculatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ADEAB8E17E905AD001F29A3 /* WJStackCalculatorTests.m */; };
 		ABCA96F697EF14FFF382C7FE /* WJCalculatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCA9B3383D48B75B061A1FA /* WJCalculatorTests.m */; };
 		ABCA9BD13039B4D9F38A4DCC /* WJStackCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCA93AAA0FD484A5BFB7A9F /* WJStackCalculator.m */; };
+		ABCA9E153E4C643F2E78CEC2 /* WJStackCalculatorButtonSequenceTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCA9B98BB26D1DD8241C522 /* WJStackCalculatorButtonSequenceTranslator.m */; };
 		ABCA9E31C1BC86BA81E387DC /* WJCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCA908CB930641F731DE2A5 /* WJCalculator.m */; };
 		ABCA9F183916985E9720D38F /* WJStackCalculatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCA95CEFB69E5900204D119 /* WJStackCalculatorView.m */; };
 		ABCA9F193A63108D6AA18FC1 /* WJStackCalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCA936FC7E61476458F66C1 /* WJStackCalculatorViewController.m */; };
@@ -60,6 +61,7 @@
 		2AD4163417EB11B8005E37B5 /* calculator_button_flip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calculator_button_flip@2x.png"; sourceTree = "<group>"; };
 		2ADEAB8E17E905AD001F29A3 /* WJStackCalculatorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJStackCalculatorTests.m; sourceTree = "<group>"; };
 		ABCA908CB930641F731DE2A5 /* WJCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJCalculator.m; sourceTree = "<group>"; };
+		ABCA93453B1A4FC79BF99BE8 /* WJStackCalculatorButtonSequenceTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WJStackCalculatorButtonSequenceTranslator.h; sourceTree = "<group>"; };
 		ABCA936FC7E61476458F66C1 /* WJStackCalculatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJStackCalculatorViewController.m; sourceTree = "<group>"; };
 		ABCA93AAA0FD484A5BFB7A9F /* WJStackCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJStackCalculator.m; sourceTree = "<group>"; };
 		ABCA93E73A4858C53AC5EFC0 /* WJStackCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WJStackCalculator.h; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 		ABCA993E28F3C601C5477B46 /* WJStackCalculatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WJStackCalculatorViewController.h; sourceTree = "<group>"; };
 		ABCA9A832EA6F73E654BD54D /* WJStackCalculatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WJStackCalculatorView.h; sourceTree = "<group>"; };
 		ABCA9B3383D48B75B061A1FA /* WJCalculatorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJCalculatorTests.m; sourceTree = "<group>"; };
+		ABCA9B98BB26D1DD8241C522 /* WJStackCalculatorButtonSequenceTranslator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJStackCalculatorButtonSequenceTranslator.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +199,15 @@
 			path = StackCalculator;
 			sourceTree = "<group>";
 		};
+		ABCA954A84CCB98C11646305 /* ButtonSequenceTranslator */ = {
+			isa = PBXGroup;
+			children = (
+				ABCA9B98BB26D1DD8241C522 /* WJStackCalculatorButtonSequenceTranslator.m */,
+				ABCA93453B1A4FC79BF99BE8 /* WJStackCalculatorButtonSequenceTranslator.h */,
+			);
+			path = ButtonSequenceTranslator;
+			sourceTree = "<group>";
+		};
 		ABCA97229B42982F09E7BC14 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -210,6 +222,7 @@
 			children = (
 				ABCA9C12021DDAA1D76942BA /* StackCalculator */,
 				ABCA9BCF007D7DD5F83DEC29 /* Calculator */,
+				ABCA954A84CCB98C11646305 /* ButtonSequenceTranslator */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -336,6 +349,7 @@
 				ABCA9E31C1BC86BA81E387DC /* WJCalculator.m in Sources */,
 				ABCA9F193A63108D6AA18FC1 /* WJStackCalculatorViewController.m in Sources */,
 				ABCA9F183916985E9720D38F /* WJStackCalculatorView.m in Sources */,
+				ABCA9E153E4C643F2E78CEC2 /* WJStackCalculatorButtonSequenceTranslator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
