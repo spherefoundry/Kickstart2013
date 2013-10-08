@@ -21,6 +21,7 @@
 
 @synthesize stackLabel = _stackLabel;
 @synthesize inputLabel = _inputLabel;
+@synthesize delegate = _delegate;
 
 NSString *const kStackCalculatorButtonCaptionKey = @"caption";
 NSString *const kStackCalculatorButtonPosXKey = @"posX";
@@ -101,6 +102,8 @@ NSString *const kStackCalculatorButtonPosYKey = @"posY";
             [button setTitle:dictionary[kStackCalculatorButtonCaptionKey] forState:UIControlStateNormal];
             [button setBackgroundImage:(posX+posY)%2 == 1 ? buttonImage : buttonImageFlip forState:UIControlStateNormal];
 
+            [button addTarget:self action:@selector(buttonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+
             if (posX + 1 > _buttonsCountX) {
                 _buttonsCountX = posX + 1;
             }
@@ -147,6 +150,10 @@ NSString *const kStackCalculatorButtonPosYKey = @"posY";
                 buttonSize.width,
                 buttonSize.height);
     }
+}
+
+- (void)buttonWasPressed:(UIButton *)button {
+    [_delegate calculatorView:self buttonWasPressed:button];
 }
 
 @end

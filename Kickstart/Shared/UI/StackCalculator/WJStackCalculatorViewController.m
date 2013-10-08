@@ -11,6 +11,9 @@
 #import "WJStackCalculatorView.h"
 
 
+@interface WJStackCalculatorViewController () <WJStackCalculatorViewDelegate>
+@end
+
 @implementation WJStackCalculatorViewController {
 
 }
@@ -21,6 +24,16 @@
 
 - (void)loadView {
     self.view = [[WJStackCalculatorView alloc] initWithFrame:CGRectZero];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    ((WJStackCalculatorView *)self.view).delegate = self;
+}
+
+- (void)calculatorView:(WJStackCalculatorView *)calculatorView buttonWasPressed:(UIButton *)button {
+    NSLog(@"button '%@' was pressed", [button titleForState:UIControlStateNormal]);
 }
 
 @end
