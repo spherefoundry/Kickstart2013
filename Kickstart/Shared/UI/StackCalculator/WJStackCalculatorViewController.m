@@ -32,8 +32,8 @@
     ((WJStackCalculatorView *)self.view).delegate = self;
 }
 
-- (void)calculatorView:(WJStackCalculatorView *)calculatorView buttonWasPressed:(UIButton *)button {
-    NSLog(@"button '%@' was pressed", [button titleForState:UIControlStateNormal]);
+- (void)calculatorView:(WJStackCalculatorView *)calculatorView buttonWasPressed:(WJStackCalculatorViewButtonId)buttonId {
+    NSLog(@"button %d was pressed", buttonId);
 }
 
 @end

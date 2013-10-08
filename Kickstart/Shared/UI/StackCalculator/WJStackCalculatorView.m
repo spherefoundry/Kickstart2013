@@ -23,6 +23,7 @@
 @synthesize inputLabel = _inputLabel;
 @synthesize delegate = _delegate;
 
+NSString *const kStackCalculatorButtonIdKey = @"buttonId";
 NSString *const kStackCalculatorButtonCaptionKey = @"caption";
 NSString *const kStackCalculatorButtonPosXKey = @"posX";
 NSString *const kStackCalculatorButtonPosYKey = @"posY";
@@ -56,8 +57,9 @@ NSString *const kStackCalculatorButtonPosYKey = @"posY";
         _stackLabel.text = @"stackX\nstackY";
         [self addSubview:_stackLabel];
 
-        NSDictionary *(^buttonPreset)(NSString *, NSUInteger, NSUInteger) = ^NSDictionary *(NSString *caption, NSUInteger posX, NSUInteger posY) {
+        NSDictionary *(^buttonPreset)(WJStackCalculatorViewButtonId, NSString *, NSUInteger, NSUInteger) = ^NSDictionary *(WJStackCalculatorViewButtonId buttonId, NSString *caption, NSUInteger posX, NSUInteger posY) {
             return @{
+                    kStackCalculatorButtonIdKey : @(buttonId),
                     kStackCalculatorButtonCaptionKey : caption,
                     kStackCalculatorButtonPosXKey : @(posX),
                     kStackCalculatorButtonPosYKey : @(posY)
@@ -65,26 +67,26 @@ NSString *const kStackCalculatorButtonPosYKey = @"posY";
         };
 
         _buttonPresets = @[
-                buttonPreset(@"7", 0, 0),
-                buttonPreset(@"8", 1, 0),
-                buttonPreset(@"9", 2, 0),
-                buttonPreset(@"4", 0, 1),
-                buttonPreset(@"5", 1, 1),
-                buttonPreset(@"6", 2, 1),
-                buttonPreset(@"1", 0, 2),
-                buttonPreset(@"2", 1, 2),
-                buttonPreset(@"3", 2, 2),
-                buttonPreset(@"0", 0, 3),
-                buttonPreset(@".", 1, 3),
-                buttonPreset(@"C", 2, 3),
-                buttonPreset(@"PUSH", 0, 4),
-                buttonPreset(@"POP", 1, 4),
-                buttonPreset(@"SWAP", 2, 4),
-                buttonPreset(@"DUP", 3, 4),
-                buttonPreset(@"+", 3, 0),
-                buttonPreset(@"-", 3, 1),
-                buttonPreset(@"*", 3, 2),
-                buttonPreset(@"/", 3, 3)
+                buttonPreset(WJStackCalculatorViewButtonIdNumber7, @"7", 0, 0),
+                buttonPreset(WJStackCalculatorViewButtonIdNumber8, @"8", 1, 0),
+                buttonPreset(WJStackCalculatorViewButtonIdNumber9, @"9", 2, 0),
+                buttonPreset(WJStackCalculatorViewButtonIdNumber4, @"4", 0, 1),
+                buttonPreset(WJStackCalculatorViewButtonIdNumber5, @"5", 1, 1),
+                buttonPreset(WJStackCalculatorViewButtonIdNumber6, @"6", 2, 1),
+                buttonPreset(WJStackCalculatorViewButtonIdNumber1, @"1", 0, 2),
+                buttonPreset(WJStackCalculatorViewButtonIdNumber2, @"2", 1, 2),
+                buttonPreset(WJStackCalculatorViewButtonIdNumber3, @"3", 2, 2),
+                buttonPreset(WJStackCalculatorViewButtonIdNumber0, @"0", 0, 3),
+                buttonPreset(WJStackCalculatorViewButtonIdNumberDot, @".", 1, 3),
+                buttonPreset(WJStackCalculatorViewButtonIdClear, @"C", 2, 3),
+                buttonPreset(WJStackCalculatorViewButtonIdPush, @"PUSH", 0, 4),
+                buttonPreset(WJStackCalculatorViewButtonIdPop, @"POP", 1, 4),
+                buttonPreset(WJStackCalculatorViewButtonIdSwap, @"SWAP", 2, 4),
+                buttonPreset(WJStackCalculatorViewButtonIdDup, @"DUP", 3, 4),
+                buttonPreset(WJStackCalculatorViewButtonIdAdd, @"+", 3, 0),
+                buttonPreset(WJStackCalculatorViewButtonIdSubstract, @"-", 3, 1),
+                buttonPreset(WJStackCalculatorViewButtonIdMultiply, @"*", 3, 2),
+                buttonPreset(WJStackCalculatorViewButtonIdDivide, @"/", 3, 3)
         ];
 
         _buttons = [NSMutableArray array];
@@ -153,7 +155,9 @@ NSString *const kStackCalculatorButtonPosYKey = @"posY";
 }
 
 - (void)buttonWasPressed:(UIButton *)button {
-    [_delegate calculatorView:self buttonWasPressed:button];
+    NSUInteger i = [_buttons indexOfObject:button];
+    WJStackCalculatorViewButtonId buttonId = (WJStackCalculatorViewButtonId)[_buttonPresets[i][kStackCalculatorButtonIdKey] unsignedIntegerValue];
+    [_delegate calculatorView:self buttonWasPressed:buttonId];
 }
 
 @end
