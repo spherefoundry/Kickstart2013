@@ -120,8 +120,35 @@ NSString *const kStackCalculatorButtonPosYKey = @"posY";
         }
     }
 
+    UISwipeGestureRecognizer * leftSwipeGR = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipeDetected:)];
+    leftSwipeGR.direction = UISwipeGestureRecognizerDirectionLeft;
+    leftSwipeGR.numberOfTouchesRequired = 1;
+    [self addGestureRecognizer:leftSwipeGR];
+
+    UISwipeGestureRecognizer * rightSwipeGR = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(rightSwipeDetected:)];
+    rightSwipeGR.direction = UISwipeGestureRecognizerDirectionRight;
+    rightSwipeGR.numberOfTouchesRequired = 1;
+    [self addGestureRecognizer:rightSwipeGR];
+
     return self;
 }
+
+- (void)leftSwipeDetected:(UISwipeGestureRecognizer *)recognizer {
+    if(recognizer.state != UIGestureRecognizerStateRecognized){
+        return;
+    }
+
+    NSLog(@"left swipe detected");
+}
+
+- (void)rightSwipeDetected:(UISwipeGestureRecognizer *)recognizer {
+    if(recognizer.state != UIGestureRecognizerStateRecognized){
+        return;
+    }
+
+    NSLog(@"right swipe detected");
+}
+
 
 - (void)layoutSubviews {
     [super layoutSubviews];
