@@ -46,7 +46,7 @@ typedef enum {
 @property (nonatomic, strong, readonly) UILabel * inputLabel;
 @property (nonatomic, strong, readonly) UILabel * stackLabel;
 
-@property (nonatomic, strong, readonly) UIView * panel;
+@property (nonatomic, strong, readonly) UITableView * panel;
 
 @property (nonatomic, weak, readwrite) id<WJStackCalculatorViewDelegate> delegate;
 

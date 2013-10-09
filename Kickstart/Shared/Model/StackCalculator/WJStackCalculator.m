@@ -63,6 +63,15 @@
     return [[_stack objectAtIndex:[_stack count] - 2] floatValue];
 }
 
+- (CGFloat)valueAtDepth:(NSUInteger)depth {
+    if(depth > self.stackDepth){
+        @throw [NSException exceptionWithName:NSRangeException reason:@"depth is out of range" userInfo:nil];
+    }
+
+    return [[_stack objectAtIndex:[_stack count] - 1 - depth] floatValue];
+}
+
+
 - (void)push:(CGFloat)a {
     [self beginTransaction];
 

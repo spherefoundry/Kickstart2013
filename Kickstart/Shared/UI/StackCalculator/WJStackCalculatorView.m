@@ -122,9 +122,10 @@ NSString *const kStackCalculatorButtonPosYKey = @"posY";
         }
     }
 
-    _panel = [[UIView alloc] initWithFrame:CGRectZero];
-    _panel.backgroundColor = [UIColor grayColor];
+    _panel = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    _panel.backgroundColor = [UIColor blackColor];
     _panel.hidden = YES;
+    _panel.rowHeight = 40;
     [self addSubview:_panel];
 
     UISwipeGestureRecognizer * leftSwipeGR = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipeDetected:)];

@@ -15,6 +15,8 @@
 @property (nonatomic, assign, readonly) CGFloat stackX;
 @property (nonatomic, assign, readonly) CGFloat stackY;
 
+- (CGFloat)valueAtDepth:(NSUInteger)depth;
+
 -(void) push:(CGFloat)a;
 -(CGFloat) pop;
 -(void) swap;

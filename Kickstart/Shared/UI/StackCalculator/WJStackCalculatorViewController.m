@@ -13,7 +13,7 @@
 #import "WJStackCalculator.h"
 
 
-@interface WJStackCalculatorViewController () <WJStackCalculatorViewDelegate>
+@interface WJStackCalculatorViewController () <WJStackCalculatorViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, readonly) WJStackCalculatorView * calculatorView;
 
@@ -42,6 +42,10 @@
                       forKeyPath:@"stackY"
                          options:NSKeyValueObservingOptionNew
                          context:nil];
+        [_calculator addObserver:self
+                      forKeyPath:@"stackDepth"
+                         options:NSKeyValueObservingOptionNew
+                         context:nil];
     }
 
     return self;
@@ -51,6 +55,7 @@
     [_translator removeObserver:self forKeyPath:@"value"];
     [_calculator removeObserver:self forKeyPath:@"stackX"];
     [_calculator removeObserver:self forKeyPath:@"stackY"];
+    [_calculator removeObserver:self forKeyPath:@"stackDepth"];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -69,6 +74,10 @@
     [super viewDidLoad];
 
     self.calculatorView.delegate = self;
+
+    self.calculatorView.panel.delegate = self;
+    self.calculatorView.panel.dataSource = self;
+
     [self synchronizeModelAndView];
 }
 
@@ -106,16 +115,44 @@
 
     [self.calculatorView.inputLabel setText:[NSString stringWithFormat:@"%f", _translator.value]];
     [self.calculatorView.stackLabel setText:[NSString stringWithFormat:@"%f\n%f", _calculator.stackX, _calculator.stackY]];
+    [self.calculatorView.panel reloadData];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (object == _translator && [keyPath isEqualToString:@"value"]) {
         [self synchronizeModelAndView];
-    } else if (object == _calculator && ([keyPath isEqualToString:@"stackX"] || [keyPath isEqualToString:@"stackY"])) {
+    } else if (object == _calculator && ([keyPath isEqualToString:@"stackX"] || [keyPath isEqualToString:@"stackY"] || [keyPath isEqualToString:@"stackDepth"])) {
         [self synchronizeModelAndView];
     } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return _calculator.stackDepth;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString * const cellIdentifier = @"cell";
+
+    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if(cell == nil){
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+
+    if(indexPath.row == 0){
+        cell.textLabel.text = [NSString stringWithFormat:@"X: %f", [_calculator valueAtDepth:(NSUInteger) indexPath.row]];
+    } else if(indexPath.row == 1){
+        cell.textLabel.text = [NSString stringWithFormat:@"Y: %f", [_calculator valueAtDepth:(NSUInteger) indexPath.row]];
+    } else {
+        cell.textLabel.text = [NSString stringWithFormat:@"%d: %f", indexPath.row, [_calculator valueAtDepth:(NSUInteger) indexPath.row]];
+    }
+
+    cell.backgroundColor = [UIColor blackColor];
+    cell.textLabel.textColor = [UIColor redColor];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+    return cell;
 }
 
 @end
