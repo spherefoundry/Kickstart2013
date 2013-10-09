@@ -21,6 +21,8 @@
 
 @synthesize stackLabel = _stackLabel;
 @synthesize inputLabel = _inputLabel;
+@synthesize panel = _panel;
+
 @synthesize delegate = _delegate;
 
 NSString *const kStackCalculatorButtonIdKey = @"buttonId";
@@ -120,6 +122,11 @@ NSString *const kStackCalculatorButtonPosYKey = @"posY";
         }
     }
 
+    _panel = [[UIView alloc] initWithFrame:CGRectZero];
+    _panel.backgroundColor = [UIColor grayColor];
+    _panel.hidden = YES;
+    [self addSubview:_panel];
+
     UISwipeGestureRecognizer * leftSwipeGR = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipeDetected:)];
     leftSwipeGR.direction = UISwipeGestureRecognizerDirectionLeft;
     leftSwipeGR.numberOfTouchesRequired = 1;
@@ -139,6 +146,10 @@ NSString *const kStackCalculatorButtonPosYKey = @"posY";
     }
 
     NSLog(@"left swipe detected");
+    if(_panel.hidden){
+        _panel.hidden = NO;
+        [self setNeedsLayout];
+    }
 }
 
 - (void)rightSwipeDetected:(UISwipeGestureRecognizer *)recognizer {
@@ -147,8 +158,11 @@ NSString *const kStackCalculatorButtonPosYKey = @"posY";
     }
 
     NSLog(@"right swipe detected");
+    if(!_panel.hidden){
+        _panel.hidden = YES;
+        [self setNeedsLayout];
+    }
 }
-
 
 - (void)layoutSubviews {
     [super layoutSubviews];
@@ -178,6 +192,12 @@ NSString *const kStackCalculatorButtonPosYKey = @"posY";
                 top + padding + (buttonSize.height + padding) * [buttonPreset[kStackCalculatorButtonPosYKey] unsignedIntegerValue],
                 buttonSize.width,
                 buttonSize.height);
+    }
+
+    if(_panel.hidden){
+        _panel.frame = CGRectOffset(self.bounds, self.bounds.size.width, 0);
+    } else {
+        _panel.frame = self.bounds;
     }
 }
 
