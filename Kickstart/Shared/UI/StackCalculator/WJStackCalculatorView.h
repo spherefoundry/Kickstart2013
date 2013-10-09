@@ -50,4 +50,7 @@ typedef enum {
 
 @property (nonatomic, weak, readwrite) id<WJStackCalculatorViewDelegate> delegate;
 
+@property (nonatomic, assign, readwrite) BOOL panelVisible;
+-(void)setPanelVisible:(BOOL)visible aniamted:(BOOL)aniamted;
+
 @end

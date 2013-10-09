@@ -146,10 +146,7 @@ NSString *const kStackCalculatorButtonPosYKey = @"posY";
     }
 
     NSLog(@"left swipe detected");
-    if(_panel.hidden){
-        _panel.hidden = NO;
-        [self setNeedsLayout];
-    }
+    [self setPanelVisible:YES aniamted:YES];
 }
 
 - (void)rightSwipeDetected:(UISwipeGestureRecognizer *)recognizer {
@@ -158,11 +155,52 @@ NSString *const kStackCalculatorButtonPosYKey = @"posY";
     }
 
     NSLog(@"right swipe detected");
-    if(!_panel.hidden){
-        _panel.hidden = YES;
-        [self setNeedsLayout];
+    [self setPanelVisible:NO aniamted:YES];
+}
+
+- (BOOL)panelVisible {
+    return !_panel.hidden;
+}
+
+- (void)setPanelVisible:(BOOL)panelVisible {
+    [self setPanelVisible:panelVisible aniamted:YES];
+}
+
+- (void)setPanelVisible:(BOOL)visible aniamted:(BOOL)aniamted {
+    if(!_panel.hidden == visible){
+        return;
+    }
+
+    void (^changeBlock)() = ^{};
+    void (^completionBlock)(BOOL) = ^(BOOL b) {};
+    if(visible){
+        _panel.hidden = NO;
+        changeBlock = ^{
+            _panel.frame = self.bounds;
+        };
+    } else {
+        changeBlock = ^{
+            _panel.frame = CGRectOffset(self.bounds, self.bounds.size.width, 0);
+        };
+        completionBlock = ^(BOOL b) {
+            if(b){
+                _panel.hidden = YES;
+            }
+        };
+    }
+
+    if(aniamted){
+        [UIView animateWithDuration:0.5f
+                              delay:0
+                            options:0
+                         animations:changeBlock
+                         completion:completionBlock];
+    } else {
+        changeBlock();
+        completionBlock(YES);
     }
 }
+
 
 - (void)layoutSubviews {
     [super layoutSubviews];
