@@ -12,4 +12,9 @@
 
 @interface WJCloudStorage : NSObject
 
+-(NSString *)localIdentifier;
+
+- (void)getStackOnSuccess:(void (^)(NSArray *))onSuccess onFailure:(void (^)(NSError * error))onFailure;
+- (void)putStack:(NSArray *)stack onSuccess:(void (^)())onSuccess onFailure:(void (^)(NSError * error))onFailure;
+
 @end

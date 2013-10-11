@@ -17,15 +17,15 @@
 
 @interface WJStackCalculatorViewController () <WJStackCalculatorViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, readonly) WJStackCalculatorView * calculatorView;
+@property(nonatomic, readonly) WJStackCalculatorView *calculatorView;
 
 @end
 
 @implementation WJStackCalculatorViewController {
     WJStackCalculatorButtonSequenceTranslator *_translator;
-    WJStackCalculator * _calculator;
+    WJStackCalculator *_calculator;
 
-    WJCloudStorage * _cloudStorage;
+    WJCloudStorage *_cloudStorage;
 }
 
 - (id)init {
@@ -84,13 +84,13 @@
     self.calculatorView.panel.delegate = self;
     self.calculatorView.panel.dataSource = self;
 
-    UITapGestureRecognizer * restoreTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                                   action:@selector(restoreStack)];
+    UITapGestureRecognizer *restoreTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                                  action:@selector(restoreStack)];
     restoreTapGestureRecognizer.numberOfTapsRequired = 3;
     [self.calculatorView.panel addGestureRecognizer:restoreTapGestureRecognizer];
 
-    UITapGestureRecognizer * storeTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                                 action:@selector(storeStack)];
+    UITapGestureRecognizer *storeTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                                action:@selector(storeStack)];
     storeTapGestureRecognizer.numberOfTapsRequired = 2;
     [storeTapGestureRecognizer requireGestureRecognizerToFail:restoreTapGestureRecognizer];
     [self.calculatorView.panel addGestureRecognizer:storeTapGestureRecognizer];
@@ -100,10 +100,36 @@
 
 - (void)restoreStack {
     NSLog(@"restore stack");
+
+    while ([_calculator stackDepth] > 0) {
+        [_calculator pop];
+    }
+
+    [_cloudStorage getStackOnSuccess:^(NSArray *array) {
+        for (NSNumber *value in array) {
+            [_calculator push:[value floatValue]];
+        }
+    }
+                           onFailure:^(NSError *error) {
+
+                           }];
 }
 
 - (void)storeStack {
     NSLog(@"store stack");
+
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:_calculator.stackDepth];
+    for (NSUInteger i = 0; i < [_calculator stackDepth]; ++i) {
+        [array addObject:@([_calculator valueAtDepth:i])];
+    }
+
+    [_cloudStorage putStack:array
+                  onSuccess:^{
+                      NSLog(@"stack was stored");
+                  }
+                  onFailure:^(NSError *error) {
+                      NSLog(@"stack was not stored: %@", error);
+                  }];
 }
 
 - (void)calculatorView:(WJStackCalculatorView *)calculatorView buttonWasPressed:(WJStackCalculatorViewButtonId)buttonId {
@@ -113,28 +139,28 @@
         [_translator inputDot];
     } else if (buttonId == WJStackCalculatorViewButtonIdClear) {
         [_translator clear];
-    } else if(buttonId == WJStackCalculatorViewButtonIdPush){
+    } else if (buttonId == WJStackCalculatorViewButtonIdPush) {
         [_calculator push:_translator.value];
         [_translator clear];
-    } else if(buttonId == WJStackCalculatorViewButtonIdPop){
+    } else if (buttonId == WJStackCalculatorViewButtonIdPop) {
         [_calculator pop];
-    } else if(buttonId == WJStackCalculatorViewButtonIdSwap){
+    } else if (buttonId == WJStackCalculatorViewButtonIdSwap) {
         [_calculator swap];
-    } else if(buttonId == WJStackCalculatorViewButtonIdDup){
+    } else if (buttonId == WJStackCalculatorViewButtonIdDup) {
         [_calculator duplicate];
-    } else if(buttonId == WJStackCalculatorViewButtonIdAdd){
+    } else if (buttonId == WJStackCalculatorViewButtonIdAdd) {
         [_calculator add];
-    } else if(buttonId == WJStackCalculatorViewButtonIdSubstract){
+    } else if (buttonId == WJStackCalculatorViewButtonIdSubstract) {
         [_calculator substract];
-    } else if(buttonId == WJStackCalculatorViewButtonIdMultiply){
+    } else if (buttonId == WJStackCalculatorViewButtonIdMultiply) {
         [_calculator multiply];
-    } else if(buttonId == WJStackCalculatorViewButtonIdDivide){
+    } else if (buttonId == WJStackCalculatorViewButtonIdDivide) {
         [_calculator divide];
     }
 }
 
 - (void)synchronizeModelAndView {
-    if(![self isViewLoaded]){
+    if (![self isViewLoaded]) {
         return;
     }
 
@@ -158,16 +184,16 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString * const cellIdentifier = @"cell";
+    NSString *const cellIdentifier = @"cell";
 
-    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if(cell == nil){
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
 
-    if(indexPath.row == 0){
+    if (indexPath.row == 0) {
         cell.textLabel.text = [NSString stringWithFormat:@"X: %f", [_calculator valueAtDepth:(NSUInteger) indexPath.row]];
-    } else if(indexPath.row == 1){
+    } else if (indexPath.row == 1) {
         cell.textLabel.text = [NSString stringWithFormat:@"Y: %f", [_calculator valueAtDepth:(NSUInteger) indexPath.row]];
     } else {
         cell.textLabel.text = [NSString stringWithFormat:@"%d: %f", indexPath.row, [_calculator valueAtDepth:(NSUInteger) indexPath.row]];
