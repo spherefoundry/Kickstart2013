@@ -11,6 +11,8 @@
 #import "WJStackCalculatorView.h"
 #import "WJStackCalculatorButtonSequenceTranslator.h"
 #import "WJStackCalculator.h"
+#import "WJCloudStorage.h"
+#import "WJAppDelegate.h"
 
 
 @interface WJStackCalculatorViewController () <WJStackCalculatorViewDelegate, UITableViewDelegate, UITableViewDataSource>
@@ -22,6 +24,8 @@
 @implementation WJStackCalculatorViewController {
     WJStackCalculatorButtonSequenceTranslator *_translator;
     WJStackCalculator * _calculator;
+
+    WJCloudStorage * _cloudStorage;
 }
 
 - (id)init {
@@ -46,6 +50,8 @@
                       forKeyPath:@"stackDepth"
                          options:NSKeyValueObservingOptionNew
                          context:nil];
+
+        _cloudStorage = [WJCloudStorage sharedInstance];
     }
 
     return self;
@@ -78,7 +84,26 @@
     self.calculatorView.panel.delegate = self;
     self.calculatorView.panel.dataSource = self;
 
+    UITapGestureRecognizer * restoreTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                                   action:@selector(restoreStack)];
+    restoreTapGestureRecognizer.numberOfTapsRequired = 3;
+    [self.calculatorView.panel addGestureRecognizer:restoreTapGestureRecognizer];
+
+    UITapGestureRecognizer * storeTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                                 action:@selector(storeStack)];
+    storeTapGestureRecognizer.numberOfTapsRequired = 2;
+    [storeTapGestureRecognizer requireGestureRecognizerToFail:restoreTapGestureRecognizer];
+    [self.calculatorView.panel addGestureRecognizer:storeTapGestureRecognizer];
+
     [self synchronizeModelAndView];
+}
+
+- (void)restoreStack {
+    NSLog(@"restore stack");
+}
+
+- (void)storeStack {
+    NSLog(@"store stack");
 }
 
 - (void)calculatorView:(WJStackCalculatorView *)calculatorView buttonWasPressed:(WJStackCalculatorViewButtonId)buttonId {
