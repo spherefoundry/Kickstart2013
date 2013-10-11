@@ -8,10 +8,13 @@
 
 #import "WJAppDelegate.h"
 #import "WJStackCalculatorViewController.h"
+#import "WJCloudStorage.h"
 
 @implementation WJAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    _cloudStorage = [[WJCloudStorage alloc] init];
+
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
 
@@ -34,6 +37,15 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+}
+
+@end
+
+@implementation WJCloudStorage(SharedInstanceAccessor)
+
++ (WJCloudStorage *)sharedInstance {
+    WJAppDelegate * appDelegate = (WJAppDelegate *) [UIApplication sharedApplication].delegate;
+    return appDelegate.cloudStorage;
 }
 
 @end

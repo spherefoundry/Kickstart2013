@@ -7,9 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WJCloudStorage.h"
+
 
 @interface WJAppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
+@property(strong, nonatomic) UIWindow *window;
+
+@property(strong, readonly) WJCloudStorage *cloudStorage;
+
+@end
+
+@interface WJCloudStorage (SharedInstanceAccessor)
+
++ (WJCloudStorage *)sharedInstance;
 
 @end
